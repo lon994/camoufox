@@ -74,6 +74,7 @@ LAUNCH_FILE = {
 }
 
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
+CAMOUFOX_NO_UPDATE_CHECK = os.getenv("CAMOUFOX_NO_UPDATE_CHECK", "").strip().lower() in ("1", "true", "yes")
 
 console = Console()
 
@@ -496,7 +497,7 @@ class CamoufoxFetcher(GitHubDownloader):
             self._version_obj = selected_version.version
             self._url = selected_version.url
             self.is_prerelease = selected_version.is_prerelease
-        else:
+        elif not CAMOUFOX_NO_UPDATE_CHECK:
             self.fetch_latest()
 
     def check_asset(
